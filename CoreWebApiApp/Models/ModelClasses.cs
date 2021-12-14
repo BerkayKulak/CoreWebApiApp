@@ -18,7 +18,7 @@ namespace CoreWebApiApp.Models
         public string CategoryName { get; set; }
 
         [Required(ErrorMessage = "Base Price is must")]
-        [NonnegativeAttribute(ErrorMessage = "base price cannot be negative")]
+        //[NonnegativeAttribute(ErrorMessage = "base price cannot be negative")]
         public int BasePrice { get; set; }
         public ICollection<Product> Products { get; set; }
 
