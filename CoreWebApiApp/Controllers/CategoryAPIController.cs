@@ -35,7 +35,8 @@ namespace CoreWebApiApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(Category category)
+        [ActionName("PostFromBody")]
+        public async Task<IActionResult> PostAsync([FromBody]Category category)
         {
             if (ModelState.IsValid)
             {
