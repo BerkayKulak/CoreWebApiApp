@@ -20,18 +20,21 @@ namespace CoreWebApiApp.Controllers
             _service = service;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
             var cats = await _service.GetAsync();
             return Ok(cats);
         }
 
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
             var cat = await _service.GetAsync(id);
             return Ok(cat);
         }
 
+        [HttpPost]
         public async Task<IActionResult> PostAsync(Category category)
         {
             if (ModelState.IsValid)
@@ -44,6 +47,7 @@ namespace CoreWebApiApp.Controllers
 
         }
 
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id , Category category)
         {
             if (ModelState.IsValid)
@@ -56,6 +60,7 @@ namespace CoreWebApiApp.Controllers
 
         }
 
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var res = await _service.DeleteAsync(id);
