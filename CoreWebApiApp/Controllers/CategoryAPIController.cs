@@ -34,38 +34,67 @@ namespace CoreWebApiApp.Controllers
             return Ok(cat);
         }
 
-        //[HttpPost]
-        //[ActionName("PostFromBody")]
-        //public async Task<IActionResult> PostAsync([FromBody]Category category)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var cat = await _service.CreateAsync(category);
-        //        return Ok(category);
-        //    }
-
-        //    return BadRequest(ModelState);
-
-        //}
-
         [HttpPost]
-        [ActionName("PostFromQuery")]
-        public async Task<IActionResult> PostQueryAsync(string categoryId,string categoryName,int basePrice)
+        [ActionName("PostFromBody")]
+        public async Task<IActionResult> PostAsync([FromBody] Category category)
         {
-            var cat = new Category()
-            {
-                CategoryId = categoryId,
-                CategoryName = categoryName,
-                BasePrice = basePrice
-            };
-
             if (ModelState.IsValid)
             {
-                cat = await _service.CreateAsync(cat);
-                return Ok(cat);
+                var cat = await _service.CreateAsync(category);
+                return Ok(category);
             }
-            return BadRequest(modelState: ModelState);
+
+            return BadRequest(ModelState);
+
         }
+
+        //[HttpPost]
+        //[ActionName("PostFromQuery")]
+        //public async Task<IActionResult> PostQueryAsync(string categoryId,string categoryName,int basePrice)
+        //{
+        //    var cat = new Category()
+        //    {
+        //        CategoryId = categoryId,
+        //        CategoryName = categoryName,
+        //        BasePrice = basePrice
+        //    };
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        cat = await _service.CreateAsync(cat);
+        //        return Ok(cat);
+        //    }
+        //    return BadRequest(modelState: ModelState);
+        //}
+
+        //[HttpPost("{categoryId}/{categoryName}/{basePrice}")]
+        //[ActionName("PostFromRoute")]
+        //public async Task<IActionResult> PostRouteAsync([FromRoute]Category cat)
+        //{
+
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        cat = await _service.CreateAsync(cat);
+        //        return Ok(cat);
+        //    }
+        //    return BadRequest(modelState: ModelState);
+        //}
+
+        //[HttpPost]
+        //[ActionName("PostFromForm")]
+        //public async Task<IActionResult> PostFormAsync([FromForm] Category cat)
+        //{
+
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        cat = await _service.CreateAsync(cat);
+        //        return Ok(cat);
+        //    }
+        //    return BadRequest(modelState: ModelState);
+        //}
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id , Category category)
