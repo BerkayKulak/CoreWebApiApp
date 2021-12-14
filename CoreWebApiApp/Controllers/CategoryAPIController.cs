@@ -34,19 +34,19 @@ namespace CoreWebApiApp.Controllers
             return Ok(cat);
         }
 
-        //[HttpPost]
-        //[ActionName("PostFromBody")]
-        //public async Task<IActionResult> PostAsync([FromBody]Category category)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var cat = await _service.CreateAsync(category);
-        //        return Ok(category);
-        //    }
+        [HttpPost]
+        [ActionName("PostFromBody")]
+        public async Task<IActionResult> PostAsync([FromBody] Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                var cat = await _service.CreateAsync(category);
+                return Ok(category);
+            }
 
-        //    return BadRequest(ModelState);
+            return BadRequest(ModelState);
 
-        //}
+        }
 
         //[HttpPost]
         //[ActionName("PostFromQuery")]
@@ -81,19 +81,19 @@ namespace CoreWebApiApp.Controllers
         //    return BadRequest(modelState: ModelState);
         //}
 
-        [HttpPost]
-        [ActionName("PostFromForm")]
-        public async Task<IActionResult> PostFormAsync([FromForm] Category cat)
-        {
+        //[HttpPost]
+        //[ActionName("PostFromForm")]
+        //public async Task<IActionResult> PostFormAsync([FromForm] Category cat)
+        //{
 
 
-            if (ModelState.IsValid)
-            {
-                cat = await _service.CreateAsync(cat);
-                return Ok(cat);
-            }
-            return BadRequest(modelState: ModelState);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        cat = await _service.CreateAsync(cat);
+        //        return Ok(cat);
+        //    }
+        //    return BadRequest(modelState: ModelState);
+        //}
 
 
         [HttpPut("{id}")]
