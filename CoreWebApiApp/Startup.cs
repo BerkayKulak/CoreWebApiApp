@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreWebApiApp.Models;
+using CoreWebApiApp.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreWebApiApp
@@ -34,10 +35,16 @@ namespace CoreWebApiApp
             {
                 options.UseSqlServer(Configuration.GetConnectionString("AppConnection"));
             });
+
+            services.AddScoped<IService<Category, int>, CategoryService>();
+            services.AddScoped<IService<Product, int>, ProductService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoreWebApiApp", Version = "v1" });
             });
+
+            //
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
