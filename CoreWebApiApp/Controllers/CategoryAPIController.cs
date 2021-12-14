@@ -38,13 +38,25 @@ namespace CoreWebApiApp.Controllers
         [ActionName("PostFromBody")]
         public async Task<IActionResult> PostAsync([FromBody] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var cat = await _service.CreateAsync(category);
-                return Ok(category);
-            }
+                if (ModelState.IsValid)
+                {
+                    if (category.BasePrice < 0)
+                    {
+                        throw new Exception("base price cannot be negative");
+                    }
+                    var cat = await _service.CreateAsync(category);
+                    return Ok(category);
+                }
 
-            return BadRequest(ModelState);
+                return BadRequest(ModelState);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+           
 
         }
 
