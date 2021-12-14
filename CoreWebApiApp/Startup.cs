@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreWebApiApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreWebApiApp
 {
@@ -28,6 +30,10 @@ namespace CoreWebApiApp
         {
 
             services.AddControllers();
+            services.AddDbContext<AppApiDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("AppConnection"));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoreWebApiApp", Version = "v1" });
