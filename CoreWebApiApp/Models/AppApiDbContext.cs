@@ -10,5 +10,18 @@ namespace CoreWebApiApp.Models
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+
+        public AppApiDbContext(DbContextOptions<AppApiDbContext> options):base(options)
+        {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>().
+                HasOne(c => c.Category).
+                WithMany(x => x.Products).
+                HasForeignKey(f=>f.CategoryRowId);
+        }
     }
 }
