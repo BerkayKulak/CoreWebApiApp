@@ -69,6 +69,18 @@ namespace CoreWebApiApp
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+                token.Events = new JwtBearerEvents()
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Authentication token expired", "true");
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddSwaggerGen(c =>
@@ -94,6 +106,8 @@ namespace CoreWebApiApp
             app.UseCustomException();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

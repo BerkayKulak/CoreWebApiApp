@@ -6,10 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoreWebApiApp.Models;
 using CoreWebApiApp.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreWebApiApp.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class CategoryAPIController : ControllerBase
     {
