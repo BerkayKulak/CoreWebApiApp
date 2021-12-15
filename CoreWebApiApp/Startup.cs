@@ -42,7 +42,10 @@ namespace CoreWebApiApp
 
             services.AddScoped<IService<Category, int>, CategoryService>();
             services.AddScoped<IService<Product, int>, ProductService>();
-
+            services.AddDbContext<SecurityDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("SecureConnection"));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoreWebApiApp", Version = "v1" });

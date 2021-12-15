@@ -26,4 +26,10 @@ namespace CoreWebApiApp.Models
         [Required(ErrorMessage = "Password is Must")]
         public string Password { get; set; }
     }
+
+    public class ResponseData
+    {
+        public string ResponseMessage { get; set; }
+
+    }
 }
