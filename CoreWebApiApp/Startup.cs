@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using CoreWebApiApp.Middlewares;
 using CoreWebApiApp.Models;
 using CoreWebApiApp.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreWebApiApp
@@ -46,7 +47,7 @@ namespace CoreWebApiApp
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SecureConnection"));
             });
-            services.AddDefaultIdentity();
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<SecurityDbContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoreWebApiApp", Version = "v1" });
