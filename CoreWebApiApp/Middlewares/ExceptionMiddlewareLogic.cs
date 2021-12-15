@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
@@ -47,6 +48,15 @@ namespace CoreWebApiApp.Middlewares
             string responseMessage = JsonConvert.SerializeObject(exceptionInfo);
 
             await ctx.Response.WriteAsync(responseMessage);
+        }
+    }
+
+    public static class ApplyMiddleware
+    {
+        public static void UseCustomException(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionMiddlewareLogic>();
+
         }
     }
 }
