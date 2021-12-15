@@ -14,8 +14,10 @@ using System.Threading.Tasks;
 using CoreWebApiApp.Middlewares;
 using CoreWebApiApp.Models;
 using CoreWebApiApp.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CoreWebApiApp
 {
@@ -31,7 +33,7 @@ namespace CoreWebApiApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
@@ -48,6 +50,27 @@ namespace CoreWebApiApp
                 options.UseSqlServer(Configuration.GetConnectionString("SecureConnection"));
             });
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<SecurityDbContext>();
+
+            byte[] secretKey = Convert.FromBase64String(Configuration["JWTCoreSettings:SecretKey"]);
+            services.AddScoped<AuthService>();
+
+            services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(token =>
+            {
+                token.RequireHttpsMetadata = false;
+                token.SaveToken = true;
+                token.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoreWebApiApp", Version = "v1" });
